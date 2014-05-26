@@ -10,7 +10,20 @@ namespace pathos.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return PostLogin();
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [Authorize]
+        public ActionResult PostLogin()
+        {
+            return View("PostLogin", "~/Views/Shared/_PostLoginLayout.cshtml");
         }
     }
 }

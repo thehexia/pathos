@@ -38,7 +38,7 @@ namespace pathos.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("PostLogin", "Home");
                     }
                 }
                 else
@@ -84,7 +84,7 @@ namespace pathos.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("PostLogin", "Home");
                 }
                 else
                 {
