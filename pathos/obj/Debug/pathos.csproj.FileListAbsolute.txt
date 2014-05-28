@@ -19,3 +19,6 @@ c:\users\hvn1\documents\visual studio 2012\Projects\pathos\pathos\bin\System.Web
 c:\users\hvn1\documents\visual studio 2012\Projects\pathos\pathos\obj\Debug\pathos.csprojResolveAssemblyReference.cache
 c:\users\hvn1\documents\visual studio 2012\Projects\pathos\pathos\obj\Debug\pathos.dll
 c:\users\hvn1\documents\visual studio 2012\Projects\pathos\pathos\obj\Debug\pathos.pdb
+C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\pathos.Migrations.AddAttributesToProjects.resources
+C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\pathos.csproj.GenerateResource.Cache
+C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\pathos.Migrations.fix001.resources

@@ -102,6 +102,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405282155598_AddAttributesToProjects.cs" />
+    <Compile Include="Migrations\201405282155598_AddAttributesToProjects.Designer.cs">
+      <DependentUpon>201405282155598_AddAttributesToProjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405282207413_fix001.cs" />
+    <Compile Include="Migrations\201405282207413_fix001.Designer.cs">
+      <DependentUpon>201405282207413_fix001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ProjectsModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,7 +182,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="UserContent\test\test.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -221,6 +232,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201405282155598_AddAttributesToProjects.resx">
+      <DependentUpon>201405282155598_AddAttributesToProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405282207413_fix001.resx">
+      <DependentUpon>201405282207413_fix001.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
