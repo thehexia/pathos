@@ -1,0 +1,41 @@
+﻿#menu_list {
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px;
+}
+
+#menu_list li {
+    padding-left: 0.5em;
+}
+
+#menu_list li:hover {
+    background-color: #ddd5d5;
+}
+
+#menu_list li a {
+    text-decoration: none;
+}
+
+#menu_list li a:visited {
+    color: #000;
+}
+
+nav {
+    width: 15%;
+    float: left;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    width: 80%;
+    float: left;
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+   
+
+body {
+}
