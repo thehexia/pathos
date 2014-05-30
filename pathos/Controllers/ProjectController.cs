@@ -18,6 +18,9 @@ namespace pathos.Controllers
 
         public ViewResult Index()
         {
+            var username = User.Identity.Name;
+            var myprojects = from Projects in db.Projects
+                             select Projects;
             return View(db.Projects.ToList());
         }
 

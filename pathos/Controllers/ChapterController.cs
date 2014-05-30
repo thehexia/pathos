@@ -23,9 +23,11 @@ namespace pathos.Controllers
             return View(chapters.ToList());
         }
 
+        [Authorize]
         [HttpPost]
-        public ActionResult Index(string username, HttpPostedFileBase file)
+        public ActionResult Index(HttpPostedFileBase file)
         {
+            var username = User.Identity.Name;
             if (file != null && file.ContentLength > 0)
             {
                 // extract only the fielname

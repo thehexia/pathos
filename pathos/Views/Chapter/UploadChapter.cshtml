@@ -5,8 +5,7 @@
 <h2>Upload Chapter</h2>
 
 @using (Html.BeginForm( "Index", 
-                        "Chapter", 
-                        new { username = @User.Identity.Name }, 
+                        "Chapter",
                         FormMethod.Post, 
                         new { enctype = "multipart/form-data" }))
 {
