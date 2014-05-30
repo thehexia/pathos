@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 using pathos.Models;
 
 namespace pathos.Controllers
@@ -16,10 +17,36 @@ namespace pathos.Controllers
         //
         // GET: /Chapter/
 
-        public ViewResult Index()
+        public ActionResult Index()
         {
             var chapters = db.Chapters.Include(c => c.Project);
             return View(chapters.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult Index(string username, HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                // extract only the fielname
+                var fileName = Path.GetFileName(file.FileName);
+                string pathname = "~/UserContent/" + username + "/";
+                //check if the folder exists. if not make it.
+                bool exists = System.IO.Directory.Exists(Server.MapPath(pathname));
+                if (!exists)
+                {
+                    System.IO.Directory.CreateDirectory(Server.MapPath(pathname));
+                }
+                //then save the file after the directory is made
+                var path = Path.Combine(Server.MapPath("~/UserContent/" + username + "/"), fileName);
+                file.SaveAs(path);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UploadChapter()
+        {
+            return View();
         }
 
         //
