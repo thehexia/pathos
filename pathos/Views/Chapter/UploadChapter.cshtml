@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Upload Chapter";
+}
+
+<h2>Upload Chapter</h2>
+
+@using (Html.BeginForm( "Index", 
+                        "Chapter", 
+                        new { username = @User.Identity.Name }, 
+                        FormMethod.Post, 
+                        new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" value="OK" />
+}
