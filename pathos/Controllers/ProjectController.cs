@@ -15,18 +15,20 @@ namespace pathos.Controllers
 
         //
         // GET: /Project/
-
+        [Authorize]
         public ViewResult Index()
         {
             var username = User.Identity.Name;
             var myprojects = from Projects in db.Projects
+                             where Projects.Author == username
                              select Projects;
-            return View(db.Projects.ToList());
+
+            return View(myprojects.ToList());
         }
 
         //
         // GET: /Project/Details/5
-
+        [Authorize]
         public ViewResult Details(int id)
         {
             Project project = db.Projects.Find(id);
@@ -35,7 +37,7 @@ namespace pathos.Controllers
 
         //
         // GET: /Project/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -43,10 +45,11 @@ namespace pathos.Controllers
 
         //
         // POST: /Project/Create
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create(Project project)
         {
+            project.Author = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Projects.Add(project);
@@ -59,7 +62,7 @@ namespace pathos.Controllers
         
         //
         // GET: /Project/Edit/5
- 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Project project = db.Projects.Find(id);
@@ -68,7 +71,7 @@ namespace pathos.Controllers
 
         //
         // POST: /Project/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Project project)
         {
@@ -83,7 +86,7 @@ namespace pathos.Controllers
 
         //
         // GET: /Project/Delete/5
- 
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Project project = db.Projects.Find(id);
@@ -92,7 +95,7 @@ namespace pathos.Controllers
 
         //
         // POST: /Project/Delete/5
-
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            
@@ -101,7 +104,7 @@ namespace pathos.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

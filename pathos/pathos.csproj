@@ -110,6 +110,14 @@
     <Compile Include="Migrations\201405282207413_fix001.Designer.cs">
       <DependentUpon>201405282207413_fix001.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406021413035_AddAuthorToChapter.cs" />
+    <Compile Include="Migrations\201406021413035_AddAuthorToChapter.Designer.cs">
+      <DependentUpon>201406021413035_AddAuthorToChapter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406021420070_FixedAuthorBug.cs" />
+    <Compile Include="Migrations\201406021420070_FixedAuthorBug.Designer.cs">
+      <DependentUpon>201406021420070_FixedAuthorBug.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ProjectsModels.cs" />
@@ -240,6 +248,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405282207413_fix001.resx">
       <DependentUpon>201405282207413_fix001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406021413035_AddAuthorToChapter.resx">
+      <DependentUpon>201406021413035_AddAuthorToChapter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406021420070_FixedAuthorBug.resx">
+      <DependentUpon>201406021420070_FixedAuthorBug.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

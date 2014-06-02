@@ -16,10 +16,18 @@ namespace pathos.Controllers
 
         //
         // GET: /Chapter/
-
-        public ActionResult Index()
+        // needs project id
+        [Authorize]
+        public ActionResult Index(int id)
         {
-            var chapters = db.Chapters.Include(c => c.Project);
+            //var chapters = db.Chapters.Include(c => c.Project);
+            //get the chapters included in a project
+
+            var chapters = from Chapters in db.Chapters
+                           where Chapters.ProjectID == id
+                           select Chapters;
+
+            ViewBag.ProjectID = id;
             return View(chapters.ToList());
         }
 
@@ -45,7 +53,7 @@ namespace pathos.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public ActionResult UploadChapter()
         {
             return View();
@@ -53,7 +61,7 @@ namespace pathos.Controllers
 
         //
         // GET: /Chapter/Details/5
-
+        [Authorize]
         public ViewResult Details(int id)
         {
             Chapter chapter = db.Chapters.Find(id);
@@ -62,7 +70,7 @@ namespace pathos.Controllers
 
         //
         // GET: /Chapter/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.ProjectID = new SelectList(db.Projects, "ProjectID", "Title");
@@ -71,10 +79,11 @@ namespace pathos.Controllers
 
         //
         // POST: /Chapter/Create
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create(Chapter chapter)
         {
+            chapter.Author = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Chapters.Add(chapter);
@@ -88,7 +97,7 @@ namespace pathos.Controllers
         
         //
         // GET: /Chapter/Edit/5
- 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Chapter chapter = db.Chapters.Find(id);
@@ -98,7 +107,7 @@ namespace pathos.Controllers
 
         //
         // POST: /Chapter/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Chapter chapter)
         {
@@ -114,7 +123,7 @@ namespace pathos.Controllers
 
         //
         // GET: /Chapter/Delete/5
- 
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Chapter chapter = db.Chapters.Find(id);
@@ -123,7 +132,7 @@ namespace pathos.Controllers
 
         //
         // POST: /Chapter/Delete/5
-
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            
@@ -133,6 +142,7 @@ namespace pathos.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

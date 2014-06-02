@@ -12,7 +12,6 @@ If the nav element is set to position:fixed (and made to occupy the entire left 
 Changing the nav element to 200px now requires me to edit the left-margin of the other div to 200px. Sure, this isn't too bad for a one-time layout change, but what if I had the nav element's width dynamically change from script? I would need the script to also change the margin of the div.
 If the nav element is set to position:fixed (and made to occupy the entire left column of the page) the rest of the page's wrapping does not accomodate its now stationary behavior and it looks terrible when the page is scrolled. To fix this I need to make the nav element infinite height. I am not sure how to do this the right way. height:9999999px;? That makes my page 10 million pixels high and the scrollbar is now useless.
 
-@Html.ActionLink("Projects", "Index", "Project");
 <br />
 @Html.ActionLink("Chapters", "Index", "Chapter");
 <br />
