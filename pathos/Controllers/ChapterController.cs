@@ -24,7 +24,7 @@ namespace pathos.Controllers
             //get the chapters included in a project
 
             var chapters = from Chapters in db.Chapters
-                           where Chapters.ProjectID == id
+                           where Chapters.ProjectID == id && Chapters.Author == User.Identity.Name
                            select Chapters;
 
             ViewBag.ProjectID = id;
@@ -53,6 +53,7 @@ namespace pathos.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [Authorize]
         public ActionResult UploadChapter()
         {
@@ -71,9 +72,9 @@ namespace pathos.Controllers
         //
         // GET: /Chapter/Create
         [Authorize]
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.ProjectID = new SelectList(db.Projects, "ProjectID", "Title");
+            ViewBag.ProjectID = id;
             return View();
         } 
 
@@ -84,14 +85,15 @@ namespace pathos.Controllers
         public ActionResult Create(Chapter chapter)
         {
             chapter.Author = User.Identity.Name;
+
             if (ModelState.IsValid)
             {
                 db.Chapters.Add(chapter);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index", new { id = chapter.ProjectID });  
             }
 
-            ViewBag.ProjectID = new SelectList(db.Projects, "ProjectID", "Title", chapter.ProjectID);
+            ViewBag.ProjectID = chapter.ProjectID;
             return View(chapter);
         }
         
@@ -115,7 +117,7 @@ namespace pathos.Controllers
             {
                 db.Entry(chapter).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = chapter.ProjectID });
             }
             ViewBag.ProjectID = new SelectList(db.Projects, "ProjectID", "Title", chapter.ProjectID);
             return View(chapter);
@@ -139,7 +141,7 @@ namespace pathos.Controllers
             Chapter chapter = db.Chapters.Find(id);
             db.Chapters.Remove(chapter);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = chapter.ProjectID });
         }
 
         [Authorize]

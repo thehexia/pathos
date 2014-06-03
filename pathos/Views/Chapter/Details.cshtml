@@ -36,5 +36,5 @@
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.ChapterID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { id = @Model.ProjectID })
 </p>

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<pathos.Models.Chapter>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Chapter";
 }
 
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { id=ViewBag.ProjectID } )
 </p>
 <table>
     <tr>

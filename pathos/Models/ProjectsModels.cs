@@ -36,6 +36,7 @@ namespace pathos.Models
         public Chapter()
         {
             this.Author = HttpContext.Current.User.Identity.Name;
+            this.Location = "default";
         }
 
         [Key] 
