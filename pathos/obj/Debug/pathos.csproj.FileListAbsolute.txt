@@ -24,3 +24,4 @@ C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\path
 C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\pathos.Migrations.fix001.resources
 C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\pathos.Migrations.AddAuthorToChapter.resources
 C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\pathos.Migrations.FixedAuthorBug.resources
+C:\Users\hvn1\Documents\Visual Studio 2012\Projects\pathos\pathos\obj\Debug\pathos.Migrations.AddTransactionTable.resources

@@ -9,10 +9,25 @@ using System.Data.Entity;
 
 namespace pathos.Models
 {
+    enum Genres
+    {
+        Horror,
+        Mystery,
+        Sci_Fi,
+        Romance,
+        Fantasy,
+        Poetry,
+        Music,
+        Satire,
+        Comedy,
+        Slice_of_Life
+    }
+
     public class Project
     {
         public Project() {
-            this.Author = HttpContext.Current.User.Identity.Name;
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+                this.Author = HttpContext.Current.User.Identity.Name;
         }
 
         [Key]
@@ -35,10 +50,13 @@ namespace pathos.Models
     {
         public Chapter()
         {
-            this.Author = HttpContext.Current.User.Identity.Name;
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+                this.Author = HttpContext.Current.User.Identity.Name;
+
             this.Location = "default";
         }
 
+        [HiddenInput]
         [Key] 
         public int ChapterID { get; set; }
 
@@ -69,8 +87,9 @@ namespace pathos.Models
         public ProjectsDBContext() : base("ProjectsDBContext") 
         {
         }
-
+        
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }
