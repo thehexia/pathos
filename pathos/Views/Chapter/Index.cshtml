@@ -1,57 +1,73 @@
 ﻿@model IEnumerable<pathos.Models.Chapter>
 
-@{
-    ViewBag.Title = "Chapter";
+<link href="@Url.Content("~/Content/ProjectLists.css")" rel="stylesheet" type="text/css" />
+
+@section Scripts 
+{
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#chapters").tablesorter({
+            headers: {
+                3: { sorter: false },
+                4: { sorter: false },
+                5: { sorter: false }
+            }
+        });
+    }
+)
+</script>
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { id=ViewBag.ProjectID } )
+    @Html.ActionLink("Create", "Create", "Chapter", new { id = ViewBag.ProjectID }, new { id = "create_button" })
 </p>
-<table>
+<table id="chapters" class="tablesorter">
+    <thead>
     <tr>
         <th>
-            Title
+            <b>Title</b> <img src="@Url.Content("~/Content/images/bg.gif")" />
         </th>
         <th>
-            Project
+            <b>Price</b> <img src="@Url.Content("~/Content/images/bg.gif")" />
         </th>
         <th>
-            Location
+            <b>Last Modified</b> <img src="@Url.Content("~/Content/images/bg.gif")" />
         </th>
-        <th>
-            Price
-        </th>
-        <th>
-            Description
-        </th>
-        <th></th>
+        <th></th> <!-- edit -->
+        <th></th> <!-- details -->
+        <th></th> <!-- delete -->
     </tr>
-
+    </thead>
+    <tbody>
 @foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Project.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            <div id="last_modified">@Html.DisplayFor(modelItem => item.LastModified)</div>
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ChapterID })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ChapterID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ChapterID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ChapterID })
+        </td>
+        <td>
             @Html.ActionLink("Delete", "Delete", new { id=item.ChapterID })
         </td>
     </tr>
 }
-
+    </tbody>
 </table>
+
+

@@ -28,6 +28,8 @@ namespace pathos.Models
         public Project() {
             if (HttpContext.Current.User.Identity.IsAuthenticated)
                 this.Author = HttpContext.Current.User.Identity.Name;
+
+            this.LastModified = DateTime.Now;
         }
 
         [Key]
@@ -39,6 +41,10 @@ namespace pathos.Models
 
         [Required]
         public string Author { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime LastModified { get; set; }
 
         [StringLength(140, MinimumLength = 0, ErrorMessage = "You have a maximum of 140 characters.")]
         public string Description { get; set; }
@@ -54,6 +60,7 @@ namespace pathos.Models
                 this.Author = HttpContext.Current.User.Identity.Name;
 
             this.Location = "default";
+            this.LastModified = DateTime.Now;
         }
 
         [HiddenInput]
@@ -75,6 +82,10 @@ namespace pathos.Models
 
         [Required]
         public decimal Price { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime LastModified { get; set; }
 
         [StringLength(140, MinimumLength = 0, ErrorMessage = "You have a maximum of 140 characters.")]
         public string Description { get; set; }

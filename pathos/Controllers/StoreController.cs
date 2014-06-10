@@ -28,30 +28,57 @@ namespace pathos.Controllers
             return View();
         }
 
-        public ActionResult Search(string query)
+        public ActionResult SearchAll(string type, string query)
         {
-            //search title for query
+            List<Project> result = new List<Project>();
 
-            //search author name for query
+            if (type == "All" || type == "Title")
+            {
+                //search title for query
+                result.AddRange(SearchByTitle(query));
+            }
+            if (type == "All" || type == "Author")
+            {
+                //search author name for query
+                result.AddRange(SearchByAuthor(query));
+            }
+            if (type == "All" || type == "Description")
+            {
+                //search description for query
+                result.AddRange(SearchByDescription(query));
+            }
 
-            //search description for query
-
-            return View();
+            return View(result);
         }
 
         public List<Project> SearchByTitle(string query)
         {
-            return new List<Project>();
+            query = query.ToLower();
+            var result = from Projects in db.Projects
+                         where Projects.Title.ToLower().Contains(query)
+                         select Projects;
+
+            return result.ToList();
         }
 
         public List<Project> SearchByDescription(string query)
         {
-            return new List<Project>();
+            query = query.ToLower();
+            var result = from Projects in db.Projects
+                         where Projects.Description.ToLower().Contains(query)
+                         select Projects;
+
+            return result.ToList();
         }
 
         public List<Project> SearchByAuthor(string query)
         {
-            return new List<Project>();
+            query = query.ToLower();
+            var result = from Projects in db.Projects
+                         where Projects.Author.ToLower().Contains(query)
+                         select Projects;
+
+            return result.ToList();
         }
 
         //TODO: add genre to projects
@@ -59,7 +86,6 @@ namespace pathos.Controllers
         {
             return new List<Project>();
         }
-
 
         protected override void Dispose(bool disposing)
         {

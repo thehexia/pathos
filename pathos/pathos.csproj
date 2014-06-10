@@ -99,6 +99,7 @@
     <Compile Include="Controllers\ChapterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -122,6 +123,10 @@
     <Compile Include="Migrations\201406061345152_AddTransactionTable.Designer.cs">
       <DependentUpon>201406061345152_AddTransactionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406092058475_AddDateTime.cs" />
+    <Compile Include="Migrations\201406092058475_AddDateTime.Designer.cs">
+      <DependentUpon>201406092058475_AddDateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ProjectsModels.cs" />
@@ -130,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PostLoginSite.css" />
+    <Content Include="Content\ProjectLists.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -191,6 +197,9 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.metadata.js" />
+    <Content Include="Scripts\jquery.tablesorter.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
@@ -240,6 +249,10 @@
     <Content Include="Views\Chapter\Delete.cshtml" />
     <Content Include="Views\Chapter\UploadChapter.cshtml" />
     <Content Include="Views\Chapter\Error.cshtml" />
+    <Content Include="Views\Store\Index.cshtml" />
+    <Content Include="Views\Store\SearchAll.cshtml" />
+    <Content Include="Views\Store\_SearchBarPartial.cshtml" />
+    <Content Include="Views\Chapter\Reader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -263,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406061345152_AddTransactionTable.resx">
       <DependentUpon>201406061345152_AddTransactionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406092058475_AddDateTime.resx">
+      <DependentUpon>201406092058475_AddDateTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

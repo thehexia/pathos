@@ -20,11 +20,6 @@
         @Html.DisplayFor(model => model.Project.Title)
     </div>
 
-    <div class="display-label">Location</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Location)
-    </div>
-
     <div class="display-label">Price</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Price)
@@ -36,6 +31,7 @@
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
+     @Html.AntiForgeryToken()
     <p>
         <input type="submit" value="Delete" /> |
         @Html.ActionLink("Back to List", "Index", new { id = @Model.ProjectID })

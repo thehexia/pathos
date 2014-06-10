@@ -6,6 +6,8 @@
     <link href="@Url.Content("~/Content/PostLoginSite.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tablesorter.js")" type="text/javascript"></script>
+   
 </head>
 <body>
     <div class="page">
@@ -22,13 +24,15 @@
                 <li>@Html.ActionLink("My Library", "", "")</li>
                 <li>@Html.ActionLink("Projects", "Index", "Project")</li>
                 <li>@Html.ActionLink("My Updates", "", "")</li>
-                <li>@Html.ActionLink("Shop", "", "")</li>
+                <li>@Html.ActionLink("Shop", "Index", "Store")</li>
             </ul>
         </nav>
         <section id="main">
             @RenderBody()
+            @RenderSection("Scripts",false/*required*/)
         </section>
         <footer>
+            
         </footer>
     </div>
 </body>

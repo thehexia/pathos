@@ -27,12 +27,24 @@ namespace pathos.Controllers
                            where Chapters.ProjectID == id && Chapters.Author == User.Identity.Name
                            select Chapters;
 
+            var projectName = (from Projects in db.Projects
+                               where Projects.ProjectID == id && Projects.Author == User.Identity.Name
+                               select Projects).FirstOrDefault();
+
+
             ViewBag.ProjectID = id;
+
+            if (projectName != null)
+                ViewBag.Title = projectName.Title;
+            else
+                ViewBag.Title = "No such project exists.";
+
             return View(chapters.ToList());
         }
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         private string UploadChapter(HttpPostedFileBase file, string filetype)
         {
             var username = User.Identity.Name;
@@ -62,6 +74,30 @@ namespace pathos.Controllers
             return pathname + filename;
         }
 
+        //upload file with specific name
+        //used specifically in cases where user wants to edit and add a new file
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        private void UploadChapter(string pathname, HttpPostedFileBase file)
+        {
+            var username = User.Identity.Name;
+            string dirname = "";
+
+            if (file != null && file.ContentLength > 0)
+            {
+                dirname = "~/UserContent/" + username + "/";
+                //check if the folder exists. if not make it.
+                bool dirExists = System.IO.Directory.Exists(Server.MapPath(dirname));
+                if (!dirExists)
+                {
+                    System.IO.Directory.CreateDirectory(Server.MapPath(dirname));
+                }
+                //then save the file after the directory is made
+                file.SaveAs(Server.MapPath(pathname));
+            }
+        }
+
         //
         // GET: /Chapter/Details/5
         [Authorize]
@@ -84,6 +120,7 @@ namespace pathos.Controllers
         // POST: /Chapter/Create
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Chapter chapter, HttpPostedFileBase file)
         {
             //validate project ID
@@ -99,7 +136,12 @@ namespace pathos.Controllers
                 return RedirectToAction("Error", new { projectID = chapter.ProjectID, errorMsg = "You must upload a file with the chapter." });
             }
 
+            //double check author
             chapter.Author = User.Identity.Name;
+
+            //re-write LastModified
+            chapter.LastModified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 //check for correct file type
@@ -146,22 +188,34 @@ namespace pathos.Controllers
         // POST: /Chapter/Edit/5
         [Authorize]
         [HttpPost]
-        public ActionResult Edit(Chapter chapter)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Chapter chapter, HttpPostedFileBase file)
         {
-            Chapter old = db.Chapters.Find(chapter.ChapterID);
+            //Chapter old = db.Chapters.Find(chapter.ChapterID);
             
             //confirm the chapter has the project ID of a project belonging to the user
             if(!IsValidProjectOwner(chapter.ProjectID))
             {
                 return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own the project you're trying to create a chapter for." });
             }
+
+            //re-write LastModified
+            chapter.LastModified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
-                old.Description = chapter.Description;
-                old.Price = chapter.Price;
-                old.ProjectID = chapter.ProjectID;
-                old.Project = chapter.Project;
+                db.Chapters.Attach(chapter);
+                var entry = db.Entry(chapter);
+                entry.State = EntityState.Modified;
+
+                entry.Property(e => e.Author).IsModified = false;
+                entry.Property(e => e.Location).IsModified = false;
+                
                 db.SaveChanges();
+
+                //if successful then upload new file
+                UploadChapter(chapter.Location, file);
+
                 return RedirectToAction("Index", new { id = chapter.ProjectID });
             }
             ViewBag.ProjectID = new SelectList(db.Projects, "ProjectID", "Title", chapter.ProjectID);
@@ -181,11 +235,21 @@ namespace pathos.Controllers
         // POST: /Chapter/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {            
             Chapter chapter = db.Chapters.Find(id);
+
+            Console.WriteLine(chapter.Location);
+
+            if (System.IO.File.Exists(Server.MapPath(chapter.Location)))
+            {
+                //delete the file off the server
+                System.IO.File.Delete(Server.MapPath(chapter.Location));
+            }
             db.Chapters.Remove(chapter);
             db.SaveChanges();
+
             return RedirectToAction("Index", new { id = chapter.ProjectID });
         }
 

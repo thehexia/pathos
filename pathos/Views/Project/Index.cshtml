@@ -1,5 +1,25 @@
 ﻿@model IEnumerable<pathos.Models.Project>
 
+<link href="@Url.Content("~/Content/ProjectLists.css")" rel="stylesheet" type="text/css" />
+
+
+@section Scripts 
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#projects").tablesorter({
+            headers: {
+                0: { sorter: false },
+                3: { sorter: false },
+                4: { sorter: false },
+                5: { sorter: false }
+            }
+        });
+    }
+)
+</script>
+}
+
 @{
     ViewBag.Title = "My Projects";
 }
@@ -7,22 +27,46 @@
 <h2>My Projects</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create", "Create", "Project", null, new { id = "create_button" })
 </p>
 
-<table>
+<table id="projects" class="tablesorter">
+  <thead>
+  <tr>
+      <th></th>
+      <th><b>Title</b> <img src="@Url.Content("~/Content/images/bg.gif")" /> </th>
+      <th><b>Last Modified</b> <img src="@Url.Content("~/Content/images/bg.gif")" /> </th>
+      <th></th>
+      <th></th>
+      <th></th>
+  </tr>
+  </thead>
+  <tbody>
   @foreach (var item in Model) {
       <tr>
+          <td id="icon">
+              <img src=@Url.Content("~/Content/images/folder.png") />
+          </td>
           <td>
               @Html.ActionLink(item.Title, "Index", "Chapter", new { id = item.ProjectID }, null)
           </td>
 
           <td>
-              @Html.ActionLink("Edit", "Edit", new { id=item.ProjectID }) |
-              @Html.ActionLink("Details", "Details", new { id=item.ProjectID }) |
+              <div id="last_modified">@Html.DisplayFor(itemModel => item.LastModified) </div>
+          </td>
+
+          <td>
+              @Html.ActionLink("Edit", "Edit", new { id=item.ProjectID })
+          </td>
+          <td>
+              @Html.ActionLink("Details", "Details", new { id=item.ProjectID })
+          </td>
+          <td>
               @Html.ActionLink("Delete", "Delete", new { id=item.ProjectID })
           </td>
       </tr>
   }
+  </tbody>
   
-  </table>
+</table>
+
