@@ -81,6 +81,7 @@ namespace pathos.Models
         public string Author { get; set; }
 
         [Required]
+        [Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Please enter a valid price.")]
         public decimal Price { get; set; }
 
         [Required]

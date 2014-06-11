@@ -45,7 +45,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @Html.ActionLink(@item.Title, "DisplayPDF", new { path = @item.Location, id = @item.ChapterID })
         </td>
 
         <td>

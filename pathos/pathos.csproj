@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201406092058475_AddDateTime.Designer.cs">
       <DependentUpon>201406092058475_AddDateTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406112152562_LimitPrice.cs" />
+    <Compile Include="Migrations\201406112152562_LimitPrice.Designer.cs">
+      <DependentUpon>201406112152562_LimitPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ProjectsModels.cs" />
@@ -190,6 +194,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\Updates.css" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -203,6 +208,27 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\Viewer.js\example.local.css" />
+    <Content Include="Scripts\Viewer.js\images\texture.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-download.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-fullscreen.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-menuArrows.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-pageDown.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-pageUp.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-presentation.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-zoomIn.png" />
+    <Content Include="Scripts\Viewer.js\images\toolbarButton-zoomOut.png" />
+    <Content Include="Scripts\Viewer.js\index.html" />
+    <Content Include="Scripts\Viewer.js\ODFViewerPlugin.js" />
+    <Content Include="Scripts\Viewer.js\pdf.js" />
+    <Content Include="Scripts\Viewer.js\pdf.worker.js" />
+    <Content Include="Scripts\Viewer.js\PDFViewerPlugin.css" />
+    <Content Include="Scripts\Viewer.js\PDFViewerPlugin.js" />
+    <Content Include="Scripts\Viewer.js\PluginLoader.js" />
+    <Content Include="Scripts\Viewer.js\TextLayerBuilder.js" />
+    <Content Include="Scripts\Viewer.js\viewer.css" />
+    <Content Include="Scripts\Viewer.js\viewer.js" />
+    <Content Include="Scripts\Viewer.js\webodf.js" />
     <Content Include="UserContent\test\test.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -279,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406092058475_AddDateTime.resx">
       <DependentUpon>201406092058475_AddDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406112152562_LimitPrice.resx">
+      <DependentUpon>201406112152562_LimitPrice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

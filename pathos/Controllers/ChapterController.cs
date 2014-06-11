@@ -260,6 +260,12 @@ namespace pathos.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize]
+        public ActionResult Reader()
+        {
+            return View();
+        }
+
         //confirms that the project belongs to the user
         [Authorize]
         private bool IsValidProjectOwner(int projectID)
@@ -278,6 +284,20 @@ namespace pathos.Controllers
             {
                 return false;
             }
+        }
+
+        [Authorize]
+        private bool OwnsCopy(int id)
+        {
+            return false;
+        }
+
+        public FileResult DisplayPDF(string path, int id)
+        {
+            if (OwnsCopy(id))
+                return File(Server.MapPath(path), "application/pdf");
+            else
+                return null;
         }
     }
 }

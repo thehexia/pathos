@@ -20,6 +20,7 @@ namespace pathos.Models
             this.DateSold = DateTime.Now;
         }
 
+        //purchase a chapter
         public Transaction(Chapter chapter)
         {
             if (HttpContext.Current.User.Identity.IsAuthenticated)
@@ -43,6 +44,7 @@ namespace pathos.Models
 
         //price
         [Required]
+        [Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage="Please enter a valid price.")]
         public decimal price { get; set; }
 
         [Required]
