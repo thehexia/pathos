@@ -1,5 +1,8 @@
 ﻿@model pathos.Models.Chapter
-
+@section Scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Free.js")"></script>
+}
 @{
     ViewBag.Title = "Create";
 }
@@ -30,7 +33,8 @@
             @Html.LabelFor(model => model.Price)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Price)
+            @Html.EditorFor(model => model.Price, new { id = "Price" })
+            <button onclick="free(); return false">Free!</button>
             @Html.ValidationMessageFor(model => model.Price)
         </div>
 

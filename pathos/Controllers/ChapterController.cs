@@ -13,6 +13,7 @@ namespace pathos.Controllers
     public class ChapterController : Controller
     {
         private ProjectsDBContext db = new ProjectsDBContext();
+        private OwnershipChecker ownerCheck = new OwnershipChecker();
 
         //
         // GET: /Chapter/
@@ -42,6 +43,18 @@ namespace pathos.Controllers
             return View(chapters.ToList());
         }
 
+        //used for non-owners to preview the contents of a project
+        [Authorize]
+        public PartialViewResult ChapterCatalog(int projectID)
+        {
+            var chapters = from Chapters in db.Chapters
+                           where Chapters.ProjectID == projectID
+                           select Chapters;
+
+            return PartialView(chapters.ToList());
+        }
+
+        //used alongside edit and create to upload pdfs for chapters
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,6 +89,7 @@ namespace pathos.Controllers
 
         //upload file with specific name
         //used specifically in cases where user wants to edit and add a new file
+        // not to be exposed to users
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -100,6 +114,7 @@ namespace pathos.Controllers
 
         //
         // GET: /Chapter/Details/5
+        // we dont care if no-owners can see details about a chapter
         [Authorize]
         public ViewResult Details(int id)
         {
@@ -125,7 +140,7 @@ namespace pathos.Controllers
         {
             //validate project ID
             //confirm the chapter has the project ID of a project belonging to the user
-            if (!IsValidProjectOwner(chapter.ProjectID) || chapter.ProjectID < 0)
+            if (!ownerCheck.IsValidProjectOwner(User.Identity.Name, chapter.ProjectID) || chapter.ProjectID < 0)
             {
                 return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own the project you're trying to create a chapter for." });
             }
@@ -179,8 +194,24 @@ namespace pathos.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
+            //confirm the chapter has the same author as the user
+            if (!ownerCheck.IsValidChapterOwner(User.Identity.Name, id))
+            {
+                return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own this chapter." });
+            }
+
             Chapter chapter = db.Chapters.Find(id);
-            ViewBag.ProjectID = new SelectList(db.Projects, "ProjectID", "Title", chapter.ProjectID);
+
+            try
+            {
+                var projectList = from Projects in db.Projects
+                                  where Projects.Author == User.Identity.Name
+                                  select Projects;
+
+                ViewBag.ProjectID = new SelectList(projectList, "ProjectID", "Title", chapter.ProjectID);
+            }
+            catch (Exception ex) { /*ignore*/ }
+
             return View(chapter);
         }
 
@@ -194,9 +225,9 @@ namespace pathos.Controllers
             //Chapter old = db.Chapters.Find(chapter.ChapterID);
             
             //confirm the chapter has the project ID of a project belonging to the user
-            if(!IsValidProjectOwner(chapter.ProjectID))
+            if(!ownerCheck.IsValidChapterOwner(User.Identity.Name, chapter.ChapterID))
             {
-                return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own the project you're trying to create a chapter for." });
+                return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own the project you're trying to edit a chapter for." });
             }
 
             //re-write LastModified
@@ -227,6 +258,11 @@ namespace pathos.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
+            if (!ownerCheck.IsValidChapterOwner(User.Identity.Name, id))
+            {
+                return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own the chapter you're trying to delete." });
+            }
+
             Chapter chapter = db.Chapters.Find(id);
             return View(chapter);
         }
@@ -247,6 +283,7 @@ namespace pathos.Controllers
                 //delete the file off the server
                 System.IO.File.Delete(Server.MapPath(chapter.Location));
             }
+
             db.Chapters.Remove(chapter);
             db.SaveChanges();
 
@@ -266,38 +303,33 @@ namespace pathos.Controllers
             return View();
         }
 
-        //confirms that the project belongs to the user
-        [Authorize]
-        private bool IsValidProjectOwner(int projectID)
-        {
-            string username = User.Identity.Name;
-            Project project = db.Projects.Find(projectID);
-            if (project == null)
-            {
-                return false;
-            }
-            if (project.Author == username)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+        
+        //
+        // TODO: Implement transaction check for ownership
+        //
         [Authorize]
         private bool OwnsCopy(int id)
         {
+            if(ownerCheck.IsValidChapterOwner(User.Identity.Name, id))
+                return true;
+            
+            //check for ownership in DB
+
+            //if we get here then all conditions failed
             return false;
         }
 
+        [Authorize]
         public FileResult DisplayPDF(string path, int id)
         {
-            if (OwnsCopy(id))
+            if (OwnsCopy(id) && System.IO.File.Exists(Server.MapPath(path)))
+            {
                 return File(Server.MapPath(path), "application/pdf");
+            }
             else
-                return null;
+            {
+                return File(Server.MapPath("~/UserContent/null.pdf"), "application/pdf");
+            }
         }
     }
 }

@@ -11,16 +11,17 @@ namespace pathos.Models
 {
     enum Genres
     {
-        Horror,
-        Mystery,
-        Sci_Fi,
-        Romance,
-        Fantasy,
-        Poetry,
-        Music,
-        Satire,
-        Comedy,
-        Slice_of_Life
+        Horror = "Horror",
+        Mystery = "Mystery",
+        Sci_Fi = "Sci Fi",
+        Romance = "Romance",
+        Fantasy = "Fantasy",
+        Poetry = "Poetry",
+        Music = "Music",
+        Satire = "Satire",
+        Comedy = "Comedy",
+        Slice_of_Life = "Slice of Life",
+        Biography = "Biography"
     }
 
     public class Project
@@ -49,6 +50,11 @@ namespace pathos.Models
         [StringLength(140, MinimumLength = 0, ErrorMessage = "You have a maximum of 140 characters.")]
         public string Description { get; set; }
 
+        /*
+        public Genres Genre { get; set; }
+
+        public Genres SecondGenre { get; set; }
+        */
         public virtual ICollection<Chapter> Chapter { get; set; }
     }
 
@@ -103,5 +109,6 @@ namespace pathos.Models
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
     }
 }

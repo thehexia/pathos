@@ -64,4 +64,36 @@ namespace pathos.Models
         [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    //profile data
+    public class Profile
+    {
+        public Profile(string username)
+        {
+            this.UserName = username;
+        }
+
+        //default
+        public Profile() 
+        {
+        }
+
+        [Key]
+        public int ProfileID { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
+
+        public string ProfilePicLoc { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Contact Email")]
+        public string ContactEmail { get; set; }
+
+        [Display(Name = "About Me")]
+        public string AboutMe { get; set; }
+
+        [Display(Name = "Real Name (optional)")]
+        public string RealName { get; set; }
+    }
 }

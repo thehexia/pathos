@@ -12,7 +12,7 @@ namespace pathos.Controllers
     public class ProjectController : Controller
     {
         private ProjectsDBContext db = new ProjectsDBContext();
-
+        private OwnershipChecker ownerCheck = new OwnershipChecker();
         //
         // GET: /Project/
         [Authorize]
@@ -24,6 +24,17 @@ namespace pathos.Controllers
                              select Projects;
 
             return View(myprojects.ToList());
+        }
+
+        //for viewing work related to a profile
+        [Authorize]
+        public PartialViewResult Portfolio(string username)
+        {
+            var projects = from Projects in db.Projects
+                           where Projects.Author == username
+                           select Projects;
+
+            return PartialView(projects.ToList());
         }
 
         //
@@ -65,7 +76,17 @@ namespace pathos.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
+            //confirm the project has the same author as the user
+            if (!ownerCheck.IsValidProjectOwner(User.Identity.Name, id))
+            {
+                return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own this project." });
+            }
+
             Project project = db.Projects.Find(id);
+
+            //list of genres
+            ViewBag.Genres = new SelectList(Enum.GetValues(typeof(Genres)).Cast<Genres>());
+
             return View(project);
         }
 
@@ -75,6 +96,12 @@ namespace pathos.Controllers
         [HttpPost]
         public ActionResult Edit(Project project)
         {
+            //confirm the project has the same author as the user
+            if (!ownerCheck.IsValidProjectOwner(User.Identity.Name, project.ProjectID))
+            {
+                return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own this project." });
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(project).State = EntityState.Modified;
@@ -89,6 +116,12 @@ namespace pathos.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
+            //confirm the project has the same author as the user
+            if (!ownerCheck.IsValidProjectOwner(User.Identity.Name, id))
+            {
+                return RedirectToAction("Error", new { projectID = -1, errorMsg = "You do not own this project." });
+            }
+
             Project project = db.Projects.Find(id);
             return View(project);
         }
@@ -104,11 +137,19 @@ namespace pathos.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         [Authorize]
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult Error(int projectID, string errorMsg)
+        {
+            ViewBag.PreviousID = projectID;
+            ViewBag.ErrorMsg = errorMsg;
+            return View();
         }
     }
 }

@@ -45,7 +45,7 @@
   @foreach (var item in Model) {
       <tr>
           <td id="icon">
-              <img src=@Url.Content("~/Content/images/folder.png") />
+              <img src="@Url.Content("~/Content/images/folder.png")" />
           </td>
           <td>
               @Html.ActionLink(item.Title, "Index", "Chapter", new { id = item.ProjectID }, null)

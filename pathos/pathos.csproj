@@ -98,6 +98,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OwnershipChecker.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Global.asax.cs">
@@ -131,6 +133,14 @@
     <Compile Include="Migrations\201406112152562_LimitPrice.Designer.cs">
       <DependentUpon>201406112152562_LimitPrice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406131938099_Profiles.cs" />
+    <Compile Include="Migrations\201406131938099_Profiles.Designer.cs">
+      <DependentUpon>201406131938099_Profiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406151616428_RmvPicRequire.cs" />
+    <Compile Include="Migrations\201406151616428_RmvPicRequire.Designer.cs">
+      <DependentUpon>201406151616428_RmvPicRequire.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ProjectsModels.cs" />
@@ -139,6 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PostLoginSite.css" />
+    <Content Include="Content\Profile.css" />
+    <Content Include="Content\ProfilePartial.css" />
     <Content Include="Content\ProjectLists.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -197,6 +209,7 @@
     <Content Include="Content\Updates.css" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\Free.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -279,10 +292,17 @@
     <Content Include="Views\Store\SearchAll.cshtml" />
     <Content Include="Views\Store\_SearchBarPartial.cshtml" />
     <Content Include="Views\Chapter\Reader.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Profile\IndexPartial.cshtml" />
+    <Content Include="Views\Profile\Error.cshtml" />
+    <Content Include="Views\Project\Portfolio.cshtml" />
+    <Content Include="Views\Project\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
+    <Folder Include="ProfileData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -308,6 +328,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406112152562_LimitPrice.resx">
       <DependentUpon>201406112152562_LimitPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406131938099_Profiles.resx">
+      <DependentUpon>201406131938099_Profiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406151616428_RmvPicRequire.resx">
+      <DependentUpon>201406151616428_RmvPicRequire.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

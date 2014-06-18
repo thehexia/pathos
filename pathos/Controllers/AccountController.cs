@@ -150,6 +150,7 @@ namespace pathos.Controllers
             return View();
         }
 
+        
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {

@@ -15,16 +15,18 @@
             <div id="title">
                 <img id="img_logo" alt="Logo" src="@Url.Content("~/Content/images/logo.jpg")" /> 
             </div>
+        </header>
+        <nav>
             <div id="logindisplay">
                 @Html.Partial("_LogOnPartial")
             </div>
-        </header>
-        <nav>
-            <ul id="menu_list">
-                <li>@Html.ActionLink("My Library", "", "")</li>
-                <li>@Html.ActionLink("Projects", "Index", "Project")</li>
+            @Html.Action("IndexPartial", "Profile")
+            <ul id="menu_list">   
+                <li>@Html.ActionLink("My Profile", "Index", "Profile")</li>
                 <li>@Html.ActionLink("My Updates", "", "")</li>
-                <li>@Html.ActionLink("Shop", "Index", "Store")</li>
+                <li>@Html.ActionLink("My Library", "", "")</li>
+                <li>@Html.ActionLink("My Projects", "Index", "Project")</li>
+                <li>@Html.ActionLink("Book Store", "Index", "Store")</li>
             </ul>
         </nav>
         <section id="main">
